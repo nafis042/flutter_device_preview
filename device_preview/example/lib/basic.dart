@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Basic'),
+        title: const Text('Basicc'),
       ),
       body: ListView(
         children: [

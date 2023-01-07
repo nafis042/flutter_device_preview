@@ -22,18 +22,17 @@ class DeviceModelPicker extends StatefulWidget {
   State<DeviceModelPicker> createState() => _DeviceModelPickerState();
 }
 
-class _DeviceModelPickerState extends State<DeviceModelPicker>
-    with SingleTickerProviderStateMixin {
+class _DeviceModelPickerState extends State<DeviceModelPicker> with SingleTickerProviderStateMixin {
   late final TabController controller = TabController(
     vsync: this,
-    length: _allPlatforms.length + 1,
+    length: _allPlatforms.length, // + 1,
     initialIndex: () {
       final store = context.read<DevicePreviewStore>();
-      if (store.isCustomDevice) {
-        return _allPlatforms.length;
-      }
+      // if (store.isCustomDevice) {
+      //   return _allPlatforms.length;
+      // }
       final platform = store.deviceInfo.identifier.platform;
-      return _allPlatforms.indexOf(platform);
+      return 0; // _allPlatforms.indexOf(platform);
     }(),
   );
 
@@ -71,10 +70,10 @@ class _DeviceModelPickerState extends State<DeviceModelPicker>
                 text: describeEnum(e),
               ),
             ),
-            const Tab(
-              icon: Icon(Icons.tune),
-              text: 'Custom',
-            )
+            // const Tab(
+            //   icon: Icon(Icons.tune),
+            //   text: 'Custom',
+            // )
           ],
         ),
       ),
@@ -87,11 +86,11 @@ class _DeviceModelPickerState extends State<DeviceModelPicker>
               platform: e,
             ),
           ),
-          CustomScrollView(
-            slivers: [
-              ...buildCustomDeviceTiles(context),
-            ],
-          ),
+          // CustomScrollView(
+          //   slivers: [
+          //     ...buildCustomDeviceTiles(context),
+          //   ],
+          // ),
         ],
       ),
     );
@@ -116,13 +115,10 @@ class _PlatformModelPicker extends StatelessWidget {
           .toList()
         ..sort((x, y) {
           final result = x.screenSize.width.compareTo(y.screenSize.width);
-          return result == 0
-              ? x.screenSize.height.compareTo(y.screenSize.height)
-              : result;
+          return result == 0 ? x.screenSize.height.compareTo(y.screenSize.height) : result;
         }),
     );
-    final byDeviceType =
-        groupBy<DeviceInfo, DeviceType>(devices, (d) => d.identifier.type);
+    final byDeviceType = groupBy<DeviceInfo, DeviceType>(devices, (d) => d.identifier.type);
     return ListView(
       children: [
         ...byDeviceType.entries
@@ -210,9 +206,9 @@ class DeviceTile extends StatelessWidget {
 const _allPlatforms = <TargetPlatform>[
   TargetPlatform.iOS,
   TargetPlatform.android,
-  TargetPlatform.macOS,
-  TargetPlatform.windows,
-  TargetPlatform.linux,
+  // TargetPlatform.macOS,
+  // TargetPlatform.windows,
+  // TargetPlatform.linux,
 ];
 
 const _allDeviceTypes = <DeviceType>[

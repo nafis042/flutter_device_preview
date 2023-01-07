@@ -350,8 +350,7 @@ class DevicePreview extends StatefulWidget {
 class _DevicePreviewState extends State<DevicePreview> {
   bool _isToolPanelPopOverOpen = false;
 
-  late DevicePreviewStorage storage =
-      widget.storage ?? DevicePreviewStorage.preferences();
+  late DevicePreviewStorage storage = widget.storage ?? DevicePreviewStorage.preferences();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -361,8 +360,7 @@ class _DevicePreviewState extends State<DevicePreview> {
 
   /// Takes a screenshot with the current configuration.
   Future<DeviceScreenshot> screenshot(DevicePreviewStore store) async {
-    final boundary =
-        _repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    final boundary = _repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     const format = ui.ImageByteFormat.png;
 
     final image = await boundary.toImage(
@@ -517,7 +515,7 @@ class _DevicePreviewState extends State<DevicePreview> {
             );
 
         final toolbar = toolbarTheme.asThemeData();
-        final background = backgroundTheme.asThemeData();
+        final background = ThemeData.dark(); // backgroundTheme.asThemeData();
         return Directionality(
           textDirection: TextDirection.ltr,
           child: AnimatedSwitcher(
@@ -535,22 +533,13 @@ class _DevicePreviewState extends State<DevicePreview> {
 
                     final borderRadius = isToolbarVisible
                         ? BorderRadius.only(
-                            topRight: isSmall
-                                ? Radius.zero
-                                : const Radius.circular(16),
+                            topRight: isSmall ? Radius.zero : const Radius.circular(16),
                             bottomRight: const Radius.circular(16),
-                            bottomLeft: isSmall
-                                ? const Radius.circular(16)
-                                : Radius.zero,
+                            bottomLeft: isSmall ? const Radius.circular(16) : Radius.zero,
                           )
                         : BorderRadius.zero;
-                    final double rightPanelOffset = !isSmall
-                        ? (isEnabled
-                            ? ToolPanel.panelWidth - 10
-                            : (64 + mediaQuery.padding.right))
-                        : 0;
-                    final double bottomPanelOffset =
-                        isSmall ? mediaQuery.padding.bottom + 52 : 0;
+                    final double rightPanelOffset = !isSmall ? (isEnabled ? ToolPanel.panelWidth - 10 : (64 + mediaQuery.padding.right)) : 0;
+                    final double bottomPanelOffset = isSmall ? mediaQuery.padding.bottom + 52 : 0;
                     return Stack(
                       children: <Widget>[
                         if (isToolbarVisible && isSmall)
